@@ -1,4 +1,6 @@
-import { FlowbiteFloatingLabelTheme } from '~/src/components/FloatingLabel/FloatingLabel';
+import type { FlowbiteFloatingLabelTheme } from '~/src/components/FloatingLabel/FloatingLabel';
+import type { FlowbiteImageTheme } from '../Image/Image';
+
 import type {
   DeepPartial,
   FlowbiteAccordionTheme,
@@ -71,6 +73,7 @@ export interface FlowbiteTheme {
   checkbox: FlowbiteCheckboxTheme;
   fileInput: FlowbiteFileInputTheme;
   floatingLabel: FlowbiteFloatingLabelTheme;
+  image: FlowbiteImageTheme;
   label: FlowbiteLabelTheme;
   radio: FlowbiteRadioTheme;
   rangeSlider: FlowbiteRangeSliderTheme;

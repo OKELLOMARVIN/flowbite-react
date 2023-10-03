@@ -384,14 +384,14 @@ export const COMPONENTS_DATA: Component[] = [
   //   link: `/docs/typography/blockquote`,
   //   classes: 'w-64'
   // },
-  // {
-  //   id: '49',
-  //   name: 'Image',
-  //   image: '/images/components/image.svg',
-  //   imageDark: '/images/components/image-dark.svg',
-  //   link: `/docs/typography/images`,
-  //   classes: 'w-64'
-  // },
+  {
+    id: '49',
+    name: 'Image',
+    image: '/images/components/image.svg',
+    imageDark: '/images/components/image-dark.svg',
+    link: `/docs/typography/images`,
+    classes: 'w-64',
+  },
   // {
   //   id: '50',
   //   name: 'List',
