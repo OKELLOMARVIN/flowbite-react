@@ -9,18 +9,22 @@ export interface FlowbiteImageTheme {
 }
 
 export interface ImageProps extends Omit<ComponentProps<'img'>, any> {
-  variant?: string;
+  alt?: string;
+  src: string;
   theme?: DeepPartial<FlowbiteImageTheme>;
 }
 
-export const Image = forwardRef<HTMLDivElement, ImageProps>(({ variant, theme: customTheme = {}, ...props }, ref) => {
+export const Image = forwardRef<HTMLDivElement, ImageProps>(({ src, alt, theme: customTheme = {}, ...props }, ref) => {
   const theme = mergeDeep(useTheme().theme.image, customTheme);
-  console.log(variant, theme);
+  console.log(theme);
   console.log({ ...props });
 
   return (
     <div ref={ref}>
-      <img className="h-auto max-w-full" src="public/images/imageComponent/image.jpg" alt="Example" />
+      <figure className="max-w-lg">
+        <img className="h-auto max-w-full rounded-lg" src={src} alt={alt} />
+        <figcaption className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">Image caption</figcaption>
+      </figure>
     </div>
   );
 });
