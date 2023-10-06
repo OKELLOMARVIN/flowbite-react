@@ -15,14 +15,14 @@ export interface ImageProps extends Omit<ComponentProps<'img'>, any> {
   caption?: string;
   imageCard?: boolean;
   imageCaption?: boolean;
-  borderRadius?: string;
+  borderRadius?: 'sm' | 'md' | 'lg'; // Only accept 'sm', 'md', or 'lg' as valid values
   fullCircle?: boolean;
   imageShadow?: boolean;
   retinaReady?: boolean;
   grayScale?: boolean;
-  blurLevel?: string;
-  size?: string;
-  alignment?: string;
+  blurLevel?: 'xs' | 'sm' | 'lg' | 'xl';
+  size?: 'sm' | 'md' | 'lg';
+  alignment?: 'left' | 'centre' | 'right';
   link?: string;
   alt?: string;
   src: string;
