@@ -12,6 +12,7 @@ export interface FlowbiteImageTheme {
 
 export interface ImageProps extends Omit<ComponentProps<'img'>, any> {
   ref?: string;
+  cardVariant?: 'imageCard' | 'imageCaption';
   caption?: string;
   imageCard?: boolean;
   imageCaption?: boolean;
@@ -20,7 +21,7 @@ export interface ImageProps extends Omit<ComponentProps<'img'>, any> {
   imageShadow?: boolean;
   retinaReady?: boolean;
   grayScale?: boolean;
-  blurLevel?: 'xs' | 'sm' | 'lg' | 'xl';
+  blurLevel?: 'sm' | 'md' | 'lg' | 'xl';
   size?: 'sm' | 'md' | 'lg';
   alignment?: 'left' | 'centre' | 'right';
   link?: string;
@@ -33,15 +34,14 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
   (
     {
       caption,
-      imageCard,
-      imageCaption,
+      cardVariant = null,
       borderRadius = null,
-      fullCircle,
+      fullCircle = false,
       imageShadow = false,
       retinaReady = false,
       grayScale,
       blurLevel = null,
-      size,
+      size = 'sm',
       link,
       alignment = 'left',
       src,
@@ -52,45 +52,37 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
     ref,
   ) => {
     const theme = mergeDeep(useTheme().theme.image, customTheme);
-    console.log({ ...props });
     // here determine which property was passed and if it needs a figure or not
-    const showImageCaption = imageCard === null || imageCaption ? false : true;
+    const showImageCaption = cardVariant === null ? false : true;
     const id = useId();
+
+    console.log(caption, 'caption');
 
     return (
       <div ref={ref}>
         {showImageCaption ? (
-          <figure
-            className={twMerge(
-              imageCard ? theme.figure.cardImage.figure : '',
-              imageCaption ? theme.figure.captionImage.figure : '',
-            )}
-          >
+          <figure className={twMerge(cardVariant !== null ? theme.figure[cardVariant]['figure'] : '')}>
             <a href={link}>
               <img
                 className={twMerge(
                   theme.image.base,
-                  borderRadius !== null ? theme.image.radius.borderRadius : '',
-                  fullCircle !== null ? theme.image.fullCircle : '',
+                  borderRadius !== null ? theme.image.radius[borderRadius] : '',
+                  fullCircle === true ? theme.image.fullCircle : '',
                   imageShadow ? theme.image.shadow : '',
                   retinaReady ? theme.image.retina : '',
                   grayScale ? theme.image.effects.gray : '',
-                  blurLevel !== null ? theme.image.effects.blur.blurLevel : '',
-                  alignment !== null ? theme.image.align.alignment : '',
-                  size !== null ? theme.image.sizes.size : '',
+                  blurLevel !== null ? theme.image.effects.blur[blurLevel] : '',
+                  alignment !== null ? theme.image.align[alignment] : '',
+                  size !== null || size !== 'undefined' ? theme.image.sizes.size : '',
                 )}
                 src={src}
                 alt={alt}
                 id={id}
                 data-testid="image-1"
+                {...props}
               />
             </a>
-            <figcaption
-              className={twMerge(
-                imageCard ? theme.figure.cardImage.figureCaption : '',
-                imageCaption ? theme.figure.captionImage.figureCaption : '',
-              )}
-            >
+            <figcaption className={twMerge(cardVariant !== null ? theme.figure[cardVariant]['figureCaption'] : '')}>
               {caption}
             </figcaption>
           </figure>
@@ -99,19 +91,20 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
             <img
               className={twMerge(
                 theme.image.base,
-                borderRadius !== null ? theme.image.radius.borderRadius : '',
-                fullCircle !== null ? theme.image.fullCircle : '',
+                borderRadius !== null ? theme.image.radius[borderRadius] : '',
+                fullCircle === true ? theme.image.fullCircle : '',
                 imageShadow ? theme.image.shadow : '',
                 retinaReady ? theme.image.retina : '',
                 grayScale ? theme.image.effects.gray : '',
-                blurLevel !== null ? theme.image.effects.blur.blurLevel : '',
+                blurLevel !== null ? theme.image.effects.blur[blurLevel] : '',
                 alignment !== null ? theme.image.align.alignment : '',
-                size !== null ? theme.image.sizes.size : '',
+                size !== null || size !== 'undefined' ? theme.image.sizes.size : '',
               )}
               src={src}
               alt={alt}
               id={id}
               data-testid="image-2"
+              {...props}
             />
           </a>
         )}

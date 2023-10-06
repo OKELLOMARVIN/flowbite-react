@@ -10,9 +10,207 @@ Get started with a collection of responsive image components coded with the util
 
 Use this example to show the responsive image that won’t grow beyond the maximum original width.
 
-<CodePreview title="Image" className="flex items-center justify-center">
+<CodePreview title="Image">
   <Image
     src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
     alt="this is the description"
+  />
+</CodePreview>
+
+## Image Caption
+
+This example can be used to add a caption for the image often used inside articles.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    cardVariant="imageCaption"
+    caption="Image Caption"
+  />
+</CodePreview>
+
+## Rounded corners
+
+Apply rounded corners to the image by using the specific utility classes from Tailwind CSS.
+
+### Border radius
+
+Use this example to apply rounded corners to the image by using sm, md or lg class where the size can be anything from small to large.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    borderRadius="md"
+  />
+</CodePreview>
+
+### Full circle
+
+Use this example to mask the image inside a circle using the class from Tailwind CSS.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    fullCircle={true}
+  />
+</CodePreview>
+
+## Image shadow
+
+This example can be used to show a shadow effect for the image using the imageShadow option and setting it to true.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    imageShadow={true}
+  />
+</CodePreview>
+
+## Retina-ready
+
+Use the srcset attribute to set Retina-ready images with double resolution.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    retinaReady={true}
+  />
+</CodePreview>
+
+## Image card
+
+Use this example to make the image a card item with a link and a short text description.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    cardVariant="imageCard"
+    caption="Do you want to get notified when a new component is added to Flowbite?"
+  />
+</CodePreview>
+
+## Image effects
+
+Use image effects such as grayscale or blur to change the appearances of the image when being hovered.
+
+### Grayscale
+
+Use the filter option and apply a grayscale to the image element using the grayscale class.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    grayScale={true}
+  />
+</CodePreview>
+
+### Blur
+
+Apply a blur by using the blurLevel option which takes string xs, sm, md, lg from Tailwind CSS to an image component.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    blurLevel="sm"
+  />
+</CodePreview>
+
+### Alignment
+
+Align the image component to the left, center or right side of the document page using margin styles.
+
+### Left
+
+By default, the image component will be aligned to the left side of the page.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    alignment="left"
+  />
+</CodePreview>
+
+### Center
+
+Horizontally align the image to the center of the page using the mx-auto class.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    alignment="centre"
+  />
+</CodePreview>
+
+### Right
+
+Use the ml-auto class to align the image to the right side of the page.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    alignment="right"
+  />
+</CodePreview>
+
+## Sizes
+
+Set the size of the image using the and or utility classes from Tailwind CSS to set the width and height of the element.
+
+### Small
+
+Use the size="sm" to set a small size of the image.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    size="sm"
+  />
+</CodePreview>
+
+### Medium
+
+Use the size="md" to set a medium size of the image.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    size="md"
+  />
+</CodePreview>
+
+### Large
+
+Use the size="lg"s to set a large size of the image.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    size="lg"
+  />
+</CodePreview>
+
+### Full width
+
+Use the size="full" to set the full width of the image as long as it doesn’t become larger than the original source.
+
+<CodePreview title="Image">
+  <Image
+    src="https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    alt="this is the description"
+    size="full"
   />
 </CodePreview>
