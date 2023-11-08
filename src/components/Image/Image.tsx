@@ -10,7 +10,7 @@ export interface FlowbiteImageTheme {
   image: any;
 }
 
-export interface ImageProps extends Omit<ComponentProps<'img'>, any> {
+export interface ImageProps extends Omit<ComponentProps<'img'>, never> {
   ref?: string;
   cardVariant?: 'imageCard' | 'imageCaption';
   caption?: string;
@@ -22,7 +22,7 @@ export interface ImageProps extends Omit<ComponentProps<'img'>, any> {
   retinaReady?: boolean;
   grayScale?: boolean;
   blurLevel?: 'sm' | 'md' | 'lg' | 'xl';
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'full';
   alignment?: 'left' | 'centre' | 'right';
   link?: string;
   alt?: string;
@@ -41,11 +41,11 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
       retinaReady = false,
       grayScale,
       blurLevel = null,
-      size = 'sm',
+      size = 'full',
       link,
       alignment = 'left',
       src,
-      alt,
+      alt = '',
       theme: customTheme = {},
       ...props
     },
