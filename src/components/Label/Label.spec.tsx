@@ -1,19 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import { HiGlobe, HiLockClosed } from 'react-icons/hi';
 import { describe, expect, it } from 'vitest';
-import {
-  Button,
-  Checkbox,
-  FileInput,
-  Flowbite,
-  Label,
-  Radio,
-  RangeSlider,
-  Select,
-  TextInput,
-  Textarea,
-  ToggleSwitch,
-} from '../../';
+import { Button } from '../Button';
+import { Checkbox } from '../Checkbox';
+import { FileInput } from '../FileInput';
+import { Flowbite, type CustomFlowbiteTheme } from '../Flowbite';
+import { Radio } from '../Radio';
+import { RangeSlider } from '../RangeSlider';
+import { Select } from '../Select';
+import { TextInput } from '../TextInput';
+import { Textarea } from '../Textarea';
+import { ToggleSwitch } from '../ToggleSwitch';
+import { Label } from './Label';
 
 describe.concurrent('Components / Label', () => {
   describe.concurrent('A11y', () => {
@@ -36,7 +34,7 @@ describe.concurrent('Components / Label', () => {
 
     describe('Theme', () => {
       it('should use `disabled` classes', () => {
-        const theme = {
+        const theme: CustomFlowbiteTheme = {
           label: {
             root: {
               disabled: 'opacity-50',

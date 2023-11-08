@@ -1,9 +1,11 @@
-import type { ComponentProps, FC, PropsWithChildren } from 'react';
+'use client';
+
+import type { ComponentProps, FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import type { DeepPartial } from '../../types';
 import { useTimelineContext } from './TimelineContext';
+import { useTimelineItemContext } from './TimelineItemContext';
 
 export interface FlowbiteTimelinePointTheme {
   horizontal: string;
@@ -21,7 +23,7 @@ export interface FlowbiteTimelinePointTheme {
   vertical: string;
 }
 
-export interface TimelnePointProps extends PropsWithChildren, ComponentProps<'div'> {
+export interface TimelnePointProps extends ComponentProps<'div'> {
   icon?: FC<ComponentProps<'svg'>>;
   theme?: DeepPartial<FlowbiteTimelinePointTheme>;
 }
@@ -33,8 +35,10 @@ export const TimelinePoint: FC<TimelnePointProps> = ({
   theme: customTheme = {},
   ...props
 }) => {
-  const theme = mergeDeep(useTheme().theme.timeline.item.point, customTheme);
   const { horizontal } = useTimelineContext();
+  const { theme: itemTheme } = useTimelineItemContext();
+
+  const theme = mergeDeep(itemTheme.point, customTheme);
 
   return (
     <div

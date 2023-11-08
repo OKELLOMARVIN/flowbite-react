@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { useTheme } from '../..';
 import { mergeDeep } from '../../../helpers/merge-deep';
 import { useDatePickerContext } from '../DatepickerContext';
 import { Views, addYears, isDateInDecade, isDateInRange, startOfYearPeriod } from '../helpers';
@@ -21,8 +20,9 @@ export interface DatepickerViewsDecadesProps {
 }
 
 export const DatepickerViewsDecades: FC<DatepickerViewsDecadesProps> = ({ theme: customTheme = {} }) => {
-  const theme = mergeDeep(useTheme().theme.datepicker.views.decades, customTheme);
-  const { selectedDate, viewDate, setViewDate, setView } = useDatePickerContext();
+  const { theme: rootTheme, selectedDate, viewDate, setViewDate, setView } = useDatePickerContext();
+
+  const theme = mergeDeep(rootTheme.views.decades, customTheme);
 
   return (
     <div className={theme.items.base}>

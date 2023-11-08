@@ -3,6 +3,7 @@ import { accordionTheme } from './components/Accordion/theme';
 import { alertTheme } from './components/Alert/theme';
 import { avatarTheme } from './components/Avatar/theme';
 import { badgeTheme } from './components/Badge/theme';
+import { blockquoteTheme } from './components/Blockquote/theme';
 import { breadcrumbTheme } from './components/Breadcrumb/theme';
 import { buttonGroupTheme, buttonTheme } from './components/Button/theme';
 import { cardTheme } from './components/Card/theme';
@@ -25,7 +26,7 @@ import { paginationTheme } from './components/Pagination/theme';
 import { progressTheme } from './components/Progress/theme';
 import { radioTheme } from './components/Radio/theme';
 import { rangeSliderTheme } from './components/RangeSlider/theme';
-import { ratingTheme } from './components/Rating/theme';
+import { ratingAdvancedTheme, ratingTheme } from './components/Rating/theme';
 import { selectTheme } from './components/Select/theme';
 import { sidebarTheme } from './components/Sidebar/theme';
 import { spinnerTheme } from './components/Spinner/theme';
@@ -43,6 +44,7 @@ export const theme: FlowbiteTheme = {
   alert: alertTheme,
   avatar: avatarTheme,
   badge: badgeTheme,
+  blockquote: blockquoteTheme,
   breadcrumb: breadcrumbTheme,
   button: buttonTheme,
   buttonGroup: buttonGroupTheme,
@@ -67,6 +69,7 @@ export const theme: FlowbiteTheme = {
   radio: radioTheme,
   rangeSlider: rangeSliderTheme,
   rating: ratingTheme,
+  ratingAdvanced: ratingAdvancedTheme,
   select: selectTheme,
   textInput: textInputTheme,
   textarea: textareaTheme,

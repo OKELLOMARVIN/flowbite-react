@@ -1,9 +1,12 @@
+'use client';
+
 import type { ComponentProps, ForwardedRef, KeyboardEvent, PropsWithChildren, ReactElement } from 'react';
 import { Children, forwardRef, useEffect, useId, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial, FlowbiteBoolean } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
+import type { FlowbiteBoolean } from '../Flowbite';
 import type { TabItemProps } from './TabItem';
 import { TabItem } from './TabItem';
 
@@ -51,7 +54,7 @@ interface TabKeyboardEventProps extends TabEventProps {
   event: KeyboardEvent<HTMLButtonElement>;
 }
 
-export interface TabsProps extends PropsWithChildren, Omit<ComponentProps<'div'>, 'ref' | 'style'> {
+export interface TabsProps extends Omit<ComponentProps<'div'>, 'ref' | 'style'> {
   onActiveTabChange?: (activeTab: number) => void;
   style?: keyof TabStyles;
   theme?: DeepPartial<FlowbiteTabTheme>;
@@ -61,12 +64,12 @@ export interface TabsRef {
   setActiveTab: (activeTab: number) => void;
 }
 
-export const TabsComponent = forwardRef<TabsRef, TabsProps>(
+const TabsComponent = forwardRef<TabsRef, TabsProps>(
   (
     { children, className, onActiveTabChange, style = 'default', theme: customTheme = {}, ...props },
     ref: ForwardedRef<TabsRef>,
   ) => {
-    const theme = mergeDeep(useTheme().theme.tab, customTheme);
+    const theme = mergeDeep(getTheme().tab, customTheme);
 
     const id = useId();
     const tabs = useMemo(
@@ -176,5 +179,8 @@ export const TabsComponent = forwardRef<TabsRef, TabsProps>(
   },
 );
 
-TabsComponent.displayName = 'Tabs.Group';
-export const Tabs = { Group: TabsComponent, Item: TabItem };
+TabsComponent.displayName = 'Tabs';
+
+export const Tabs = Object.assign(TabsComponent, {
+  Item: TabItem,
+});

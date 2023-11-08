@@ -1,13 +1,17 @@
-import { createContext, useContext } from 'react';
+'use client';
 
-export type TableContextType = {
+import { createContext, useContext } from 'react';
+import type { FlowbiteTableTheme } from './Table';
+
+export type TableContext = {
+  theme: FlowbiteTableTheme;
   striped?: boolean;
   hoverable?: boolean;
 };
 
-export const TableContext = createContext<TableContextType | undefined>(undefined);
+export const TableContext = createContext<TableContext | undefined>(undefined);
 
-export function useTableContext(): TableContextType {
+export function useTableContext(): TableContext {
   const context = useContext(TableContext);
 
   if (!context) {

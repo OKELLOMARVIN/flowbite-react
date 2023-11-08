@@ -1,9 +1,10 @@
-import type { ComponentProps, FC, PropsWithChildren } from 'react';
+import type { ComponentProps, FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial, FlowbiteBoolean } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
 import { omit } from '../../helpers/omit';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
+import type { FlowbiteBoolean } from '../Flowbite';
 
 export interface FlowbiteCardTheme {
   root: FlowbiteCardRootTheme;
@@ -22,7 +23,7 @@ export interface FlowbiteCardImageTheme {
   horizontal: FlowbiteBoolean;
 }
 
-interface CommonCardProps extends PropsWithChildren<ComponentProps<'div'>> {
+interface CommonCardProps extends ComponentProps<'div'> {
   horizontal?: boolean;
   href?: string;
   /** Overwrites the theme. Will be merged with the context theme.
@@ -49,7 +50,7 @@ export const Card: FC<CardProps> = (props) => {
   const Component = typeof href === 'undefined' ? 'div' : 'a';
   const theirProps = removeCustomProps(props);
 
-  const theme = mergeDeep(useTheme().theme.card, customTheme);
+  const theme = mergeDeep(getTheme().card, customTheme);
 
   return (
     <Component
@@ -71,7 +72,7 @@ export const Card: FC<CardProps> = (props) => {
 };
 
 const Image: FC<CardProps> = ({ theme: customTheme = {}, ...props }) => {
-  const theme = mergeDeep(useTheme().theme.card, customTheme);
+  const theme = mergeDeep(getTheme().card, customTheme);
   if (props.renderImage) {
     return props.renderImage(theme, props.horizontal ?? false);
   }

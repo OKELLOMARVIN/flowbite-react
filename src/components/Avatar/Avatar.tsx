@@ -1,8 +1,9 @@
-import type { ComponentProps, FC, PropsWithChildren, ReactElement } from 'react';
+import type { ComponentProps, FC, ReactElement } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial, FlowbiteBoolean, FlowbiteColors, FlowbitePositions, FlowbiteSizes } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
+import type { FlowbiteBoolean, FlowbiteColors, FlowbitePositions, FlowbiteSizes } from '../Flowbite';
 import type { FlowbiteAvatarGroupTheme } from './AvatarGroup';
 import { AvatarGroup } from './AvatarGroup';
 import type { FlowbiteAvatarGroupCounterTheme } from './AvatarGroupCounter';
@@ -60,7 +61,7 @@ export interface AvatarImageProps {
   'data-testid': string;
 }
 
-export interface AvatarProps extends PropsWithChildren<Omit<ComponentProps<'div'>, 'color'>> {
+export interface AvatarProps extends Omit<ComponentProps<'div'>, 'color'> {
   alt?: string;
   bordered?: boolean;
   img?: string | ((props: AvatarImageProps) => ReactElement);
@@ -90,7 +91,7 @@ const AvatarComponent: FC<AvatarProps> = ({
   theme: customTheme = {},
   ...props
 }) => {
-  const theme = mergeDeep(useTheme().theme.avatar, customTheme);
+  const theme = mergeDeep(getTheme().avatar, customTheme);
 
   const imgClassName = twMerge(
     theme.root.img.base,
@@ -161,6 +162,7 @@ const AvatarComponent: FC<AvatarProps> = ({
 };
 
 AvatarComponent.displayName = 'Avatar';
+
 export const Avatar = Object.assign(AvatarComponent, {
   Group: AvatarGroup,
   Counter: AvatarGroupCounter,

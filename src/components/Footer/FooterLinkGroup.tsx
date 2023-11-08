@@ -1,8 +1,8 @@
-import type { ComponentProps, FC, PropsWithChildren } from 'react';
+import type { ComponentProps, FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
 import type { FlowbiteFooterLinkTheme } from './FooterLink';
 
 export interface FlowbiteFooterLinkGroupTheme {
@@ -11,7 +11,7 @@ export interface FlowbiteFooterLinkGroupTheme {
   col: string;
 }
 
-export interface FooterLinkGroupProps extends PropsWithChildren, ComponentProps<'ul'> {
+export interface FooterLinkGroupProps extends ComponentProps<'ul'> {
   col?: boolean;
   theme?: DeepPartial<FlowbiteFooterLinkGroupTheme>;
 }
@@ -23,7 +23,7 @@ export const FooterLinkGroup: FC<FooterLinkGroupProps> = ({
   theme: customTheme = {},
   ...props
 }) => {
-  const theme = mergeDeep(useTheme().theme.footer.groupLink, customTheme);
+  const theme = mergeDeep(getTheme().footer.groupLink, customTheme);
 
   return (
     <ul data-testid="footer-groupLink" className={twMerge(theme.base, col && theme.col, className)} {...props}>

@@ -1,4 +1,6 @@
-import type { ExtendedRefs, useInteractions } from '@floating-ui/react';
+'use client';
+
+import type { ExtendedRefs } from '@floating-ui/react';
 import { FloatingFocusManager, FloatingList, useListNavigation, useTypeahead } from '@floating-ui/react';
 import type {
   ComponentProps,
@@ -6,27 +8,24 @@ import type {
   FC,
   HTMLProps,
   MutableRefObject,
-  PropsWithChildren,
   ReactElement,
   ReactNode,
   RefCallback,
   SetStateAction,
 } from 'react';
-import { cloneElement, createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { HiOutlineChevronDown, HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineChevronUp } from 'react-icons/hi';
-import type { ButtonProps, DeepPartial } from '../../';
-import { Button, useTheme } from '../../';
-import type { FloatingProps, FlowbiteFloatingTheme } from '../../components/Floating';
-import { mergeDeep } from '../../helpers/merge-deep';
-import type { FlowbiteDropdownDividerTheme } from './DropdownDivider';
-import { DropdownDivider } from './DropdownDivider';
-import type { FlowbiteDropdownHeaderTheme } from './DropdownHeader';
-import { DropdownHeader } from './DropdownHeader';
-import type { FlowbiteDropdownItemTheme } from './DropdownItem';
-import { DropdownItem } from './DropdownItem';
-
 import { twMerge } from 'tailwind-merge';
-import { useBaseFLoating, useFloatingInteractions } from '../../helpers/use-floating';
+import { mergeDeep } from '../../helpers/merge-deep';
+import { useBaseFLoating, useFloatingInteractions } from '../../hooks/use-floating';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
+import { Button, type ButtonProps } from '../Button';
+import type { FloatingProps, FlowbiteFloatingTheme } from '../Floating';
+import { DropdownContext } from './DropdownContext';
+import { DropdownDivider, type FlowbiteDropdownDividerTheme } from './DropdownDivider';
+import { DropdownHeader, type FlowbiteDropdownHeaderTheme } from './DropdownHeader';
+import { DropdownItem, type FlowbiteDropdownItemTheme } from './DropdownItem';
 
 export interface FlowbiteDropdownFloatingTheme
   extends FlowbiteFloatingTheme,
@@ -42,10 +41,7 @@ export interface FlowbiteDropdownTheme {
   arrowIcon: string;
 }
 
-export interface DropdownProps
-  extends PropsWithChildren,
-    Pick<FloatingProps, 'placement' | 'trigger'>,
-    Omit<ButtonProps, 'theme'> {
+export interface DropdownProps extends Pick<FloatingProps, 'placement' | 'trigger'>, Omit<ButtonProps, 'theme'> {
   arrowIcon?: boolean;
   dismissOnClick?: boolean;
   floatingArrow?: boolean;
@@ -114,15 +110,6 @@ const Trigger = ({
   );
 };
 
-interface DropdownContextValue {
-  activeIndex: number | null;
-  dismissOnClick?: boolean;
-  getItemProps: ReturnType<typeof useInteractions>['getItemProps'];
-  handleSelect: (index: number | null) => void;
-}
-
-export const DropdownContext = createContext<DropdownContextValue>({} as DropdownContextValue);
-
 const DropdownComponent: FC<DropdownProps> = ({
   children,
   className,
@@ -138,7 +125,7 @@ const DropdownComponent: FC<DropdownProps> = ({
   const elementsRef = useRef<Array<HTMLElement | null>>([]);
   const labelsRef = useRef<Array<string | null>>([]);
 
-  const theme = mergeDeep(useTheme().theme.dropdown, customTheme);
+  const theme = mergeDeep(getTheme().dropdown, customTheme);
   const theirProps = props as Omit<DropdownProps, 'theme'>;
   const dataTestId = props['data-testid'] || 'flowbite-dropdown-target';
   const {
@@ -199,7 +186,7 @@ const DropdownComponent: FC<DropdownProps> = ({
   }, [placement]);
 
   return (
-    <>
+    <DropdownContext.Provider value={{ theme, activeIndex, dismissOnClick, getItemProps, handleSelect }}>
       <Trigger
         {...buttonProps}
         refs={refs}
@@ -214,42 +201,33 @@ const DropdownComponent: FC<DropdownProps> = ({
         {label}
         {arrowIcon && <Icon className={theme.arrowIcon} />}
       </Trigger>
-      <DropdownContext.Provider
-        value={{
-          activeIndex,
-          dismissOnClick,
-          getItemProps,
-          handleSelect,
-        }}
-      >
-        {open && (
-          <FloatingFocusManager context={context} modal={false}>
-            <div
-              ref={refs.setFloating}
-              style={{ ...floatingStyles, minWidth: buttonWidth }}
-              data-testid="flowbite-dropdown"
-              aria-expanded={open}
-              {...getFloatingProps({
-                className: twMerge(
-                  theme.floating.base,
-                  theme.floating.animation,
-                  'duration-100',
-                  !open && theme.floating.hidden,
-                  theme.floating.style.auto,
-                  className,
-                ),
-              })}
-            >
-              <FloatingList elementsRef={elementsRef} labelsRef={labelsRef}>
-                <ul className={theme.content} tabIndex={-1}>
-                  {children}
-                </ul>
-              </FloatingList>
-            </div>
-          </FloatingFocusManager>
-        )}
-      </DropdownContext.Provider>
-    </>
+      {open && (
+        <FloatingFocusManager context={context} modal={false}>
+          <div
+            ref={refs.setFloating}
+            style={{ ...floatingStyles, minWidth: buttonWidth }}
+            data-testid="flowbite-dropdown"
+            aria-expanded={open}
+            {...getFloatingProps({
+              className: twMerge(
+                theme.floating.base,
+                theme.floating.animation,
+                'duration-100',
+                !open && theme.floating.hidden,
+                theme.floating.style.auto,
+                className,
+              ),
+            })}
+          >
+            <FloatingList elementsRef={elementsRef} labelsRef={labelsRef}>
+              <ul className={theme.content} tabIndex={-1}>
+                {children}
+              </ul>
+            </FloatingList>
+          </div>
+        </FloatingFocusManager>
+      )}
+    </DropdownContext.Provider>
   );
 };
 

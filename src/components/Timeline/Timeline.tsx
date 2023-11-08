@@ -1,13 +1,14 @@
-import type { ComponentProps, FC, PropsWithChildren } from 'react';
+'use client';
+
+import type { ComponentProps, FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
 import { TimelineBody } from './TimelineBody';
 import { TimelineContent } from './TimelineContent';
 import { TimelineContext } from './TimelineContext';
-import type { FlowbiteTimelineItemTheme } from './TimelineItem';
-import { TimelineItem } from './TimelineItem';
+import { TimelineItem, type FlowbiteTimelineItemTheme } from './TimelineItem';
 import { TimelinePoint } from './TimelinePoint';
 import { TimelineTime } from './TimelineTime';
 import { TimelineTitle } from './TimelineTitle';
@@ -22,7 +23,7 @@ export interface FlowbiteTimelineTheme {
   item: FlowbiteTimelineItemTheme;
 }
 
-export interface TimelineProps extends PropsWithChildren, ComponentProps<'ol'> {
+export interface TimelineProps extends ComponentProps<'ol'> {
   horizontal?: boolean;
   theme?: DeepPartial<FlowbiteTimelineTheme>;
 }
@@ -34,10 +35,10 @@ const TimelineComponent: FC<TimelineProps> = ({
   theme: customTheme = {},
   ...props
 }) => {
-  const theme = mergeDeep(useTheme().theme.timeline, customTheme);
+  const theme = mergeDeep(getTheme().timeline, customTheme);
 
   return (
-    <TimelineContext.Provider value={{ horizontal }}>
+    <TimelineContext.Provider value={{ theme, horizontal }}>
       <ol
         data-testid="timeline-component"
         className={twMerge(

@@ -1,14 +1,13 @@
 import type { Placement } from '@floating-ui/core';
-import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react';
-import type { DeepPartial } from '../../';
-import { useTheme } from '../../';
-import type { FlowbiteFloatingTheme } from '../../components/Floating';
-import { Floating } from '../../components/Floating';
+import type { ComponentProps, FC, ReactNode } from 'react';
 import { mergeDeep } from '../../helpers/merge-deep';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
+import { Floating, type FlowbiteFloatingTheme } from '../Floating';
 
 export type FlowbiteTooltipTheme = FlowbiteFloatingTheme;
 
-export interface TooltipProps extends PropsWithChildren<Omit<ComponentProps<'div'>, 'content' | 'style'>> {
+export interface TooltipProps extends Omit<ComponentProps<'div'>, 'content' | 'style'> {
   animation?: false | `duration-${number}`;
   arrow?: boolean;
   content: ReactNode;
@@ -33,7 +32,7 @@ export const Tooltip: FC<TooltipProps> = ({
   trigger = 'hover',
   ...props
 }) => {
-  const theme = mergeDeep(useTheme().theme.tooltip, customTheme);
+  const theme = mergeDeep(getTheme().tooltip, customTheme);
 
   return (
     <Floating

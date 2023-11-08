@@ -1,9 +1,11 @@
-import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react';
+import type { ComponentProps, FC, ReactNode } from 'react';
 import { forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial, FlowbiteBoolean, FlowbiteColors, FlowbiteSizes } from '../../';
-import { HelperText, useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
+import type { FlowbiteBoolean, FlowbiteColors, FlowbiteSizes } from '../Flowbite';
+import { HelperText } from '../HelperText';
 
 export interface FlowbiteSelectTheme {
   base: string;
@@ -33,7 +35,7 @@ export interface SelectSizes extends Pick<FlowbiteSizes, 'sm' | 'md' | 'lg'> {
   [key: string]: string;
 }
 
-export interface SelectProps extends PropsWithChildren, Omit<ComponentProps<'select'>, 'color' | 'ref'> {
+export interface SelectProps extends Omit<ComponentProps<'select'>, 'color' | 'ref'> {
   addon?: ReactNode;
   color?: keyof SelectColors;
   helperText?: ReactNode;
@@ -59,7 +61,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     },
     ref,
   ) => {
-    const theme = mergeDeep(useTheme().theme.select, customTheme);
+    const theme = mergeDeep(getTheme().select, customTheme);
 
     return (
       <div className={twMerge(theme.base, className)}>

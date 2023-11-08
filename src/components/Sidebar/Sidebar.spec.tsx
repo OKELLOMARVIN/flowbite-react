@@ -3,8 +3,7 @@ import userEvent from '@testing-library/user-event';
 import type { FC } from 'react';
 import { HiChartPie, HiInbox, HiShoppingBag } from 'react-icons/hi';
 import { describe, expect, it } from 'vitest';
-import type { DeepPartial, FlowbiteTheme } from '../../';
-import { Flowbite } from '../../';
+import { Flowbite, type CustomFlowbiteTheme } from '../Flowbite';
 import type { SidebarProps } from './Sidebar';
 import { Sidebar } from './Sidebar';
 
@@ -124,7 +123,7 @@ describe('Props', () => {
 
 describe('Theme', () => {
   it('should use custom classes', () => {
-    const theme: DeepPartial<FlowbiteTheme> = {
+    const theme: CustomFlowbiteTheme = {
       sidebar: {
         root: {
           base: 'bg-gray-100',
@@ -156,7 +155,7 @@ describe('Theme', () => {
   describe('`Sidebar.Collapse`', () => {
     it('should use custom classes', async () => {
       const user = userEvent.setup();
-      const theme = {
+      const theme: CustomFlowbiteTheme = {
         sidebar: {
           collapse: {
             button: 'text-gray-100',
@@ -204,7 +203,7 @@ describe('Theme', () => {
 
   describe('`Sidebar.CTA`', () => {
     it('should use custom classes', () => {
-      const theme = {
+      const theme: CustomFlowbiteTheme = {
         sidebar: {
           cta: {
             base: 'bg-gray-100',
@@ -227,7 +226,7 @@ describe('Theme', () => {
 
   describe('`Sidebar.Item`', () => {
     it('should use custom classes', () => {
-      const theme = {
+      const theme: CustomFlowbiteTheme = {
         sidebar: {
           item: {
             active: 'text-gray-100',
@@ -237,7 +236,6 @@ describe('Theme', () => {
             },
             content: {
               base: 'bg-gray-200',
-              collapsed: 'text-gray-600',
             },
             icon: {
               base: 'text-gray-400',
@@ -273,9 +271,11 @@ describe('Theme', () => {
 
   describe('`Sidebar.Items`', () => {
     it('should use custom classes', () => {
-      const theme = {
+      const theme: CustomFlowbiteTheme = {
         sidebar: {
-          items: 'text-gray-100',
+          items: {
+            base: 'text-gray-100',
+          },
         },
       };
 
@@ -291,9 +291,11 @@ describe('Theme', () => {
 
   describe('`Sidebar.ItemGroup`', () => {
     it('should use custom classes', () => {
-      const theme = {
+      const theme: CustomFlowbiteTheme = {
         sidebar: {
-          itemGroup: 'text-gray-100',
+          itemGroup: {
+            base: 'text-gray-100',
+          },
         },
       };
 
@@ -308,7 +310,7 @@ describe('Theme', () => {
 
   describe('`Sidebar.Logo`', () => {
     it('should use custom classes', () => {
-      const theme = {
+      const theme: CustomFlowbiteTheme = {
         sidebar: {
           logo: {
             base: 'text-gray-100',

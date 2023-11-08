@@ -1,9 +1,10 @@
-import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react';
+import type { ComponentProps, FC, ReactNode } from 'react';
 import { HiX } from 'react-icons/hi';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial, FlowbiteColors } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
+import type { FlowbiteColors } from '../Flowbite';
 
 export interface FlowbiteAlertTheme {
   base: string;
@@ -21,7 +22,7 @@ export interface FlowbiteAlertCloseButtonTheme {
   icon: string;
 }
 
-export interface AlertProps extends PropsWithChildren<Omit<ComponentProps<'div'>, 'color'>> {
+export interface AlertProps extends Omit<ComponentProps<'div'>, 'color'> {
   additionalContent?: ReactNode;
   color?: keyof FlowbiteColors;
   icon?: FC<ComponentProps<'svg'>>;
@@ -43,7 +44,7 @@ export const Alert: FC<AlertProps> = ({
   withBorderAccent,
   ...props
 }) => {
-  const theme = mergeDeep(useTheme().theme.alert, customTheme);
+  const theme = mergeDeep(getTheme().alert, customTheme);
 
   return (
     <div

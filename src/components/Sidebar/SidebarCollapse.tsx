@@ -1,10 +1,13 @@
+'use client';
+
 import type { ComponentProps, FC, PropsWithChildren, ReactElement } from 'react';
 import { useEffect, useId, useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial, FlowbiteBoolean } from '../../';
-import { Tooltip, useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import type { DeepPartial } from '../../types';
+import type { FlowbiteBoolean } from '../Flowbite';
+import { Tooltip } from '../Tooltip';
 import { useSidebarContext } from './SidebarContext';
 import type { SidebarItemProps } from './SidebarItem';
 import { SidebarItemContext } from './SidebarItemContext';
@@ -26,13 +29,12 @@ export interface FlowbiteSidebarCollapseTheme {
 }
 
 export interface SidebarCollapseProps
-  extends PropsWithChildren,
-    Pick<SidebarItemProps, 'active' | 'as' | 'href' | 'icon' | 'label' | 'labelColor'>,
+  extends Pick<SidebarItemProps, 'active' | 'as' | 'href' | 'icon' | 'label' | 'labelColor'>,
     ComponentProps<'button'> {
   onClick?: ComponentProps<'button'>['onClick'];
   open?: boolean;
   chevronIcon?: FC<ComponentProps<'svg'>>;
-  renderChevronIcon?: (theme: DeepPartial<FlowbiteSidebarCollapseTheme>, open: boolean) => ReactElement;
+  renderChevronIcon?: (theme: FlowbiteSidebarCollapseTheme, open: boolean) => ReactElement;
   theme?: DeepPartial<FlowbiteSidebarCollapseTheme>;
 }
 
@@ -48,9 +50,10 @@ export const SidebarCollapse: FC<SidebarCollapseProps> = ({
   ...props
 }) => {
   const id = useId();
-  const { isCollapsed } = useSidebarContext();
   const [isOpen, setOpen] = useState(open);
-  const theme = mergeDeep(useTheme().theme.sidebar.collapse, customTheme);
+  const { theme: rootTheme, isCollapsed } = useSidebarContext();
+
+  const theme = mergeDeep(rootTheme.collapse, customTheme);
 
   useEffect(() => setOpen(open), [open]);
 

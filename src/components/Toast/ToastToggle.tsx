@@ -1,9 +1,10 @@
+'use client';
+
 import type { ComponentProps, FC, MouseEvent } from 'react';
 import { HiX } from 'react-icons/hi';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import type { DeepPartial } from '../../types';
 import { useToastContext } from './ToastContext';
 
 export interface FlowbiteToastToggleTheme {
@@ -25,8 +26,9 @@ export const ToastToggle: FC<ToastToggleProps> = ({
   onDismiss,
   ...props
 }) => {
-  const theme = mergeDeep(useTheme().theme.toast.toggle, customTheme);
-  const { duration, isClosed, isRemoved, setIsClosed, setIsRemoved } = useToastContext();
+  const { theme: rootTheme, duration, isClosed, isRemoved, setIsClosed, setIsRemoved } = useToastContext();
+
+  const theme = mergeDeep(rootTheme.toggle, customTheme);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (onClick) onClick(e);

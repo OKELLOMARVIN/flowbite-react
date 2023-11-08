@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { Flowbite } from '../../';
+import { Flowbite } from '../Flowbite';
 import { DarkThemeToggle } from './DarkThemeToggle';
 
 describe('Dark theme toggle', () => {
@@ -16,7 +16,7 @@ describe('Dark theme toggle', () => {
     await user.tab();
     await user.keyboard('[Space]');
 
-    expect(screen.queryByLabelText('Currently light mode')).not.toBeInTheDocument();
-    expect(screen.queryByLabelText('Currently dark mode')).toBeInTheDocument();
+    expect(screen.queryByLabelText('Currently light mode')).toHaveAttribute('data-active', 'false');
+    expect(screen.queryByLabelText('Currently dark mode')).toHaveAttribute('data-active', 'true');
   });
 });

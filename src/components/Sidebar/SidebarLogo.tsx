@@ -1,9 +1,11 @@
-import type { ComponentProps, FC, PropsWithChildren } from 'react';
+'use client';
+
+import type { ComponentProps, FC } from 'react';
 import { useId } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial, FlowbiteBoolean } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import type { DeepPartial } from '../../types';
+import type { FlowbiteBoolean } from '../Flowbite';
 import { useSidebarContext } from './SidebarContext';
 
 export interface FlowbiteSidebarLogoTheme {
@@ -12,14 +14,14 @@ export interface FlowbiteSidebarLogoTheme {
   img: string;
 }
 
-export interface SidebarLogoProps extends PropsWithChildren, ComponentProps<'a'> {
+export interface SidebarLogoProps extends ComponentProps<'a'> {
   href: string;
   img: string;
   imgAlt?: string;
   theme?: DeepPartial<FlowbiteSidebarLogoTheme>;
 }
 
-const SidebarLogo: FC<SidebarLogoProps> = ({
+export const SidebarLogo: FC<SidebarLogoProps> = ({
   children,
   className,
   href,
@@ -29,8 +31,9 @@ const SidebarLogo: FC<SidebarLogoProps> = ({
   ...props
 }) => {
   const id = useId();
-  const { isCollapsed } = useSidebarContext();
-  const theme = mergeDeep(useTheme().theme.sidebar.logo, customTheme);
+  const { theme: rootTheme, isCollapsed } = useSidebarContext();
+
+  const theme = mergeDeep(rootTheme.logo, customTheme);
 
   return (
     <a
@@ -48,4 +51,3 @@ const SidebarLogo: FC<SidebarLogoProps> = ({
 };
 
 SidebarLogo.displayName = 'Sidebar.Logo';
-export default SidebarLogo;

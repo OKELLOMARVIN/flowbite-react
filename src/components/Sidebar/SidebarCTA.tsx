@@ -1,8 +1,10 @@
-import type { ComponentProps, FC, PropsWithChildren } from 'react';
+'use client';
+
+import type { ComponentProps, FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial, FlowbiteColors } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import type { DeepPartial } from '../../types';
+import type { FlowbiteColors } from '../Flowbite';
 import { useSidebarContext } from './SidebarContext';
 
 export interface FlowbiteSidebarCTATheme {
@@ -10,7 +12,7 @@ export interface FlowbiteSidebarCTATheme {
   color: FlowbiteSidebarCTAColors;
 }
 
-export interface SidebarCTAProps extends PropsWithChildren, Omit<ComponentProps<'div'>, 'color'> {
+export interface SidebarCTAProps extends Omit<ComponentProps<'div'>, 'color'> {
   color?: keyof FlowbiteSidebarCTAColors;
   theme?: DeepPartial<FlowbiteSidebarCTATheme>;
 }
@@ -30,8 +32,9 @@ export const SidebarCTA: FC<SidebarCTAProps> = ({
   theme: customTheme = {},
   ...props
 }) => {
-  const { isCollapsed } = useSidebarContext();
-  const theme = mergeDeep(useTheme().theme.sidebar.cta, customTheme);
+  const { theme: rootTheme, isCollapsed } = useSidebarContext();
+
+  const theme = mergeDeep(rootTheme.cta, customTheme);
 
   return (
     <div

@@ -1,19 +1,18 @@
-import type { ComponentProps, ElementType, FC, PropsWithChildren } from 'react';
+'use client';
+
+import type { ComponentProps, ElementType, FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial, FlowbiteBoolean } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
-import type { FlowbiteSidebarCTATheme } from './SidebarCTA';
-import { SidebarCTA } from './SidebarCTA';
-import type { FlowbiteSidebarCollapseTheme } from './SidebarCollapse';
-import { SidebarCollapse } from './SidebarCollapse';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
+import type { FlowbiteBoolean } from '../Flowbite';
+import { SidebarCTA, type FlowbiteSidebarCTATheme } from './SidebarCTA';
+import { SidebarCollapse, type FlowbiteSidebarCollapseTheme } from './SidebarCollapse';
 import { SidebarContext } from './SidebarContext';
-import type { FlowbiteSidebarItemTheme } from './SidebarItem';
-import { SidebarItem } from './SidebarItem';
-import { SidebarItemGroup } from './SidebarItemGroup';
-import { SidebarItems } from './SidebarItems';
-import type { FlowbiteSidebarLogoTheme } from './SidebarLogo';
-import SidebarLogo from './SidebarLogo';
+import { SidebarItem, type FlowbiteSidebarItemTheme } from './SidebarItem';
+import { SidebarItemGroup, type FlowbiteSidebarItemGroupTheme } from './SidebarItemGroup';
+import { SidebarItems, type FlowbiteSidebarItemsTheme } from './SidebarItems';
+import { SidebarLogo, type FlowbiteSidebarLogoTheme } from './SidebarLogo';
 
 export interface FlowbiteSidebarTheme {
   root: {
@@ -24,12 +23,12 @@ export interface FlowbiteSidebarTheme {
   collapse: FlowbiteSidebarCollapseTheme;
   cta: FlowbiteSidebarCTATheme;
   item: FlowbiteSidebarItemTheme;
-  items: string;
-  itemGroup: string;
+  items: FlowbiteSidebarItemsTheme;
+  itemGroup: FlowbiteSidebarItemGroupTheme;
   logo: FlowbiteSidebarLogoTheme;
 }
 
-export interface SidebarProps extends PropsWithChildren, ComponentProps<'div'> {
+export interface SidebarProps extends ComponentProps<'div'> {
   as?: ElementType;
   collapseBehavior?: 'collapse' | 'hide';
   collapsed?: boolean;
@@ -45,10 +44,10 @@ const SidebarComponent: FC<SidebarProps> = ({
   className,
   ...props
 }) => {
-  const theme = mergeDeep(useTheme().theme.sidebar, customTheme);
+  const theme = mergeDeep(getTheme().sidebar, customTheme);
 
   return (
-    <SidebarContext.Provider value={{ isCollapsed }}>
+    <SidebarContext.Provider value={{ theme, isCollapsed }}>
       <Component
         aria-label="Sidebar"
         hidden={isCollapsed && collapseBehavior === 'hide'}
@@ -62,6 +61,7 @@ const SidebarComponent: FC<SidebarProps> = ({
 };
 
 SidebarComponent.displayName = 'Sidebar';
+
 export const Sidebar = Object.assign(SidebarComponent, {
   Collapse: SidebarCollapse,
   CTA: SidebarCTA,

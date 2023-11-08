@@ -1,9 +1,9 @@
-import type { ComponentProps, FC, PropsWithChildren, ReactNode } from 'react';
+import type { ComponentProps, FC, ReactNode } from 'react';
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
 import type { FlowbitePaginationButtonTheme, PaginationButtonProps } from './PaginationButton';
 import { PaginationButton, PaginationNavigation } from './PaginationButton';
 import { range } from './helpers';
@@ -38,7 +38,7 @@ export interface FlowbitePaginationNavigationTheme {
   icon: string;
 }
 
-export interface PaginationProps extends PropsWithChildren, ComponentProps<'nav'> {
+export interface PaginationProps extends ComponentProps<'nav'> {
   currentPage: number;
   layout?: 'navigation' | 'pagination' | 'table';
   nextLabel?: string;
@@ -63,7 +63,7 @@ const PaginationComponent: FC<PaginationProps> = ({
   totalPages,
   ...props
 }) => {
-  const theme = mergeDeep(useTheme().theme.pagination, customTheme);
+  const theme = mergeDeep(getTheme().pagination, customTheme);
 
   const lastPage = Math.min(Math.max(currentPage + 2, 5), totalPages);
   const firstPage = Math.max(1, lastPage - 4);
@@ -123,6 +123,7 @@ const PaginationComponent: FC<PaginationProps> = ({
 };
 
 PaginationComponent.displayName = 'Pagination';
+
 export const Pagination = Object.assign(PaginationComponent, {
   Button: PaginationButton,
 });

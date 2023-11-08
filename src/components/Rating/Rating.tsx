@@ -1,9 +1,10 @@
-import type { ComponentProps, FC, PropsWithChildren } from 'react';
+'use client';
+
+import type { ComponentProps, FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
-import type { FlowbiteRatingAdvancedTheme } from './RatingAdvanced';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
 import { RatingAdvanced } from './RatingAdvanced';
 import { RatingContext } from './RatingContext';
 import type { FlowbiteRatingStarTheme, FlowbiteStarSizes } from './RatingStar';
@@ -14,19 +15,18 @@ export interface FlowbiteRatingTheme {
     base: string;
   };
   star: FlowbiteRatingStarTheme;
-  advanced: FlowbiteRatingAdvancedTheme;
 }
 
-export interface RatingProps extends PropsWithChildren<ComponentProps<'div'>> {
+export interface RatingProps extends ComponentProps<'div'> {
   size?: keyof FlowbiteStarSizes;
   theme?: DeepPartial<FlowbiteRatingTheme>;
 }
 
 const RatingComponent: FC<RatingProps> = ({ children, className, size = 'sm', theme: customTheme = {}, ...props }) => {
-  const theme = mergeDeep(useTheme().theme.rating, customTheme);
+  const theme = mergeDeep(getTheme().rating, customTheme);
 
   return (
-    <RatingContext.Provider value={{ size }}>
+    <RatingContext.Provider value={{ theme, size }}>
       <div className={twMerge(theme.root.base, className)} {...props}>
         {children}
       </div>

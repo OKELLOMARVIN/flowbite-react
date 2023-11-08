@@ -1,15 +1,17 @@
-import type { ComponentProps, FC, PropsWithChildren } from 'react';
+'use client';
+
+import type { ComponentProps, FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
 import { useAccordionContext } from './AccordionPanelContext';
 
 export interface FlowbiteAccordionComponentTheme {
   base: string;
 }
 
-export interface AccordionContentProps extends PropsWithChildren<ComponentProps<'div'>> {
+export interface AccordionContentProps extends ComponentProps<'div'> {
   theme?: DeepPartial<FlowbiteAccordionComponentTheme>;
 }
 
@@ -21,7 +23,7 @@ export const AccordionContent: FC<AccordionContentProps> = ({
 }) => {
   const { isOpen } = useAccordionContext();
 
-  const theme = mergeDeep(useTheme().theme.accordion.content, customTheme);
+  const theme = mergeDeep(getTheme().accordion.content, customTheme);
 
   return (
     <div

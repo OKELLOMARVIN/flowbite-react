@@ -1,8 +1,8 @@
-import type { ComponentProps, FC, PropsWithChildren } from 'react';
+import type { ComponentProps, FC } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { DeepPartial } from '../../';
-import { useTheme } from '../../';
 import { mergeDeep } from '../../helpers/merge-deep';
+import { getTheme } from '../../theme-store';
+import type { DeepPartial } from '../../types';
 
 export interface FlowbiteKbdTheme {
   root: FlowbiteKbdRootTheme;
@@ -13,13 +13,13 @@ export interface FlowbiteKbdRootTheme {
   icon: string;
 }
 
-export interface KbdProps extends PropsWithChildren<ComponentProps<'span'>> {
+export interface KbdProps extends ComponentProps<'span'> {
   icon?: FC<ComponentProps<'svg'>>;
   theme?: DeepPartial<FlowbiteKbdTheme>;
 }
 
 export const Kbd: FC<KbdProps> = ({ children, className, icon: Icon, theme: customTheme = {}, ...props }) => {
-  const theme = mergeDeep(useTheme().theme.kbd, customTheme);
+  const theme = mergeDeep(getTheme().kbd, customTheme);
 
   return (
     <span className={twMerge(theme.root.base, className)} data-testid="flowbite-kbd" {...props}>
