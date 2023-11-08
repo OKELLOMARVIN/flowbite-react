@@ -3,7 +3,8 @@ import type { ComponentProps } from 'react';
 import { forwardRef, useId } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { mergeDeep } from '~/src/helpers/merge-deep';
-import { useTheme, type DeepPartial } from '..';
+import { getTheme } from '~/src/theme-store';
+import { type DeepPartial } from '../../types';
 
 export interface FlowbiteImageTheme {
   figure: any;
@@ -51,7 +52,7 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
     },
     ref,
   ) => {
-    const theme = mergeDeep(useTheme().theme.image, customTheme);
+    const theme = mergeDeep(getTheme().image, customTheme);
     // here determine which property was passed and if it needs a figure or not
     const showImageCaption = cardVariant === null ? false : true;
     const id = useId();

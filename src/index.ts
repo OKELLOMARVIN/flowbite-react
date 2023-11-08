@@ -18,6 +18,7 @@ export * from './components/Flowbite';
 export type { CustomFlowbiteTheme } from './components/Flowbite/FlowbiteTheme';
 export * from './components/Footer';
 export * from './components/HelperText';
+export * from './components/Image';
 export * from './components/Kbd';
 export * from './components/Label';
 export * from './components/ListGroup';
